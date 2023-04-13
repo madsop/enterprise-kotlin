@@ -10,16 +10,23 @@ import jakarta.ws.rs.core.MediaType
 
 @Path("/paths")
 @ApplicationScoped
-open class Paths {
+class Paths(var repository: Repository) {
+
+    constructor() : this(Repository())
 
     @Path("/hello")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    open fun hello(
+    fun hello(
         @NotEmpty
         @QueryParam("name")
         name: String,
     ) = HelloResponse("Hello, from Kotlin to $name")
+
+    @Path("/hello2")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    fun hello2() = HelloResponse("Hello, from Kotlin")
 }
 
 data class HelloResponse(val text: String)

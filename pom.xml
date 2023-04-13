@@ -99,18 +99,17 @@
 
                 <configuration>
                     <javaParameters>true</javaParameters>
-                    <jvmTarget>11</jvmTarget>
+                    <jvmTarget>17</jvmTarget>
                     <compilerPlugins>
                         <plugin>all-open</plugin>
-                        <plugin>jpa</plugin>
                     </compilerPlugins>
                     <pluginOptions>
                         <option>all-open:annotation=javax.ws.rs.Path</option>
                         <option>all-open:annotation=javax.enterprise.context.ApplicationScoped</option>
-                        <option>all-open:annotation=io.quarkus.test.junit.QuarkusTest</option>
                         <option>all-open:annotation=javax.persistence.Entity</option>
                         <option>all-open:annotation=javax.persistence.MappedSuperclass</option>
                         <option>all-open:annotation=javax.persistence.Embeddable</option>
+                        <option>all-open:annotation=jakarta.ws.rs.ApplicationPath</option>
                     </pluginOptions>
                 </configuration>
             </plugin>
