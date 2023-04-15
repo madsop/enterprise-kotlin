@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.madsopheim</groupId>
@@ -36,6 +36,12 @@
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.14.2.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -58,6 +64,15 @@
             <plugin>
                 <groupId>io.openliberty.tools</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
+                <configuration>
+                    <copyDependencies>
+                        <location>${project.build.directory}/liberty/wlp/usr/shared/resources</location>
+                        <dependency>
+                            <groupId>org.apache.derby</groupId>
+                            <artifactId>derby</artifactId>
+                        </dependency>
+                    </copyDependencies>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -111,7 +126,10 @@
                         <option>all-open:annotation=jakarta.persistence.MappedSuperclass</option>
                         <option>all-open:annotation=jakarta.persistence.Embeddable</option>
                         <option>all-open:annotation=jakarta.ws.rs.ApplicationPath</option>
-                        <option>no-arg:annotation=jakarta.ws.rs.Path</option>
+                        <option>all-open:annotation=jakarta.persistence.PersistenceContext</option>
+                        <option>all-open:annotation=jakarta.inject.Inject</option>
+                        <option>jpa:annotation=jakarta.ws.rs.Path</option>
+                        <option>jpa:annotation=jakarta.enterprise.context.ApplicationScoped</option>
                     </pluginOptions>
                 </configuration>
             </plugin>
