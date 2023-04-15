@@ -1,6 +1,7 @@
 package no.madsopheim.enterpriseKotlin
 
 import jakarta.enterprise.context.ApplicationScoped
+import jakarta.inject.Inject
 import jakarta.validation.constraints.NotEmpty
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
@@ -10,9 +11,7 @@ import jakarta.ws.rs.core.MediaType
 
 @Path("/paths")
 @ApplicationScoped
-class Paths(var repository: Repository) {
-
-    constructor() : this(Repository())
+class Paths(@Inject var repository: Repository) {
 
     @Path("/hello")
     @GET
@@ -21,9 +20,9 @@ class Paths(var repository: Repository) {
         @NotEmpty
         @QueryParam("name")
         name: String,
-    ) = HelloResponse("Hello, from Kotlin to $name")
+    ) = HelloResponse("Hello, from ${repository.language()} to $name")
 
-    @Path("/hello2")
+    @Path("/simpleHello")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     fun hello2() = HelloResponse("Hello, from Kotlin")

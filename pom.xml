@@ -102,6 +102,7 @@
                     <jvmTarget>17</jvmTarget>
                     <compilerPlugins>
                         <plugin>all-open</plugin>
+                        <plugin>jpa</plugin>
                     </compilerPlugins>
                     <pluginOptions>
                         <option>all-open:annotation=jakarta.ws.rs.Path</option>
@@ -110,6 +111,7 @@
                         <option>all-open:annotation=jakarta.persistence.MappedSuperclass</option>
                         <option>all-open:annotation=jakarta.persistence.Embeddable</option>
                         <option>all-open:annotation=jakarta.ws.rs.ApplicationPath</option>
+                        <option>no-arg:annotation=jakarta.ws.rs.Path</option>
                     </pluginOptions>
                 </configuration>
             </plugin>
