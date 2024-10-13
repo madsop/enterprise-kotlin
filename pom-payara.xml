@@ -17,6 +17,7 @@
         <cargo.version>1.10.13</cargo.version>
         <payara.url>https://repo1.maven.org/maven2/fish/payara/distributions/payara/6.2024.10/payara-6.2024.10.zip</payara.url>
         <payara.home>payara6</payara.home>
+        <kotlin.version>1.8.20</kotlin.version>
     </properties>
 
     <dependencyManagement>
@@ -48,6 +49,11 @@
             <artifactId>payara-api</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -77,6 +83,61 @@
                             <url>${payara.url}</url>
                         </zipUrlInstaller>
                     </container>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <source>src/main/kotlin</source>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <javaParameters>true</javaParameters>
+                    <jvmTarget>17</jvmTarget>
+                    <compilerPlugins>
+                        <plugin>all-open</plugin>
+                        <plugin>jpa</plugin>
+                    </compilerPlugins>
+                    <pluginOptions>
+                        <option>all-open:annotation=jakarta.ws.rs.Path</option>
+                        <option>all-open:annotation=jakarta.enterprise.context.ApplicationScoped</option>
+                        <option>all-open:annotation=jakarta.persistence.Entity</option>
+                        <option>all-open:annotation=jakarta.ws.rs.ApplicationPath</option>
+                        <option>jpa:annotation=jakarta.ws.rs.Path</option>
+                        <option>jpa:annotation=jakarta.enterprise.context.ApplicationScoped</option>
+                    </pluginOptions>
                 </configuration>
             </plugin>
         </plugins>
