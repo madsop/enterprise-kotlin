@@ -1,7 +1,6 @@
 package no.madsopheim.enterpriseKotlin
 
 import jakarta.enterprise.context.ApplicationScoped
-import jakarta.inject.Inject
 import jakarta.transaction.Transactional
 import jakarta.validation.constraints.NotEmpty
 import jakarta.ws.rs.GET
@@ -13,7 +12,7 @@ import kotlin.random.Random
 
 @Path("/paths")
 @ApplicationScoped
-class Paths(@Inject private var repository: Repository) {
+class Paths {
 
     @Path("/hello")
     @GET
@@ -25,8 +24,8 @@ class Paths(@Inject private var repository: Repository) {
         name: String,
     ): HelloResponse {
         val id = Random.nextInt()
-        repository.create(Hello(id, "the repository ${System.currentTimeMillis()}"))
-        return HelloResponse("Hello, from ${repository.read(id)} to $name")
+        //repository.create(Hello(id, "the repository ${System.currentTimeMillis()}"))
+        return HelloResponse("Hello, from $id to $name")
     }
 
     @Path("/simpleHello")
